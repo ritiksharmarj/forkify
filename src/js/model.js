@@ -1,5 +1,5 @@
 import { async } from 'regenerator-runtime';
-import { API_URL } from './config.js';
+import { API_URL, RES_PER_PAGE } from './config.js';
 import { getJSON } from './helpers.js';
 
 export const state = {
@@ -7,10 +7,15 @@ export const state = {
    search: {
       query: '',
       results: [],
+      page: 1,
+      resultsPerPage: RES_PER_PAGE,
    },
 };
 
-// This function returns nothing but just update state recipe object
+/**
+ * This function returns nothing but just update state recipe object
+ * This function works for the result recipe section
+ */
 export const loadRecipe = async (id) => {
    try {
       const data = await getJSON(`${API_URL}${id}`);
@@ -33,7 +38,10 @@ export const loadRecipe = async (id) => {
    }
 };
 
-// This function returns nothing but just update state search object
+/**
+ * This function returns nothing but just update state search object
+ * This function works for the search results recipe section
+ */
 export const loadSearchResults = async (query) => {
    try {
       state.search.query = query;
@@ -51,4 +59,16 @@ export const loadSearchResults = async (query) => {
    } catch (error) {
       throw error;
    }
+};
+
+// Pagination function
+export const getSearchResultsPage = (page = state.search.page) => {
+   // Update page state with current page
+   state.search.page = page;
+
+   // At a time, we'll have 10 results
+   const start = (page - 1) * state.search.resultsPerPage; // array starts at index 0
+   const end = page * state.search.resultsPerPage; // so if page = 1 then there will be 10 results
+
+   return state.search.results.slice(start, end);
 };

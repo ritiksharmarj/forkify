@@ -2,11 +2,13 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import paginationView from './views/paginationView.js';
 
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import { async } from 'regenerator-runtime';
 
+// Single recipe section function
 const controlRecipes = async () => {
    try {
       // Get hash id from the url like #5ed6604591c37cdc054bcb37
@@ -28,6 +30,7 @@ const controlRecipes = async () => {
    }
 };
 
+// Render all the recipes for query in recipe search results section
 const controlSearchResults = async () => {
    try {
       resultsView.renderSpinner();
@@ -42,7 +45,11 @@ const controlSearchResults = async () => {
       await model.loadSearchResults(query);
 
       // Render search results
-      resultsView.render(model.state.search.results);
+      // resultsView.render(model.state.search.results);
+      resultsView.render(model.getSearchResultsPage(5));
+
+      // Render initial pagination buttons
+      paginationView.render(model.state.search);
    } catch (error) {
       console.log(error);
    }
