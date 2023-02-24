@@ -4,6 +4,18 @@ import View from './View.js';
 class PaginationView extends View {
    _parentElement = document.querySelector('.pagination');
 
+   addHandlerClick(handler) {
+      this._parentElement.addEventListener('click', (e) => {
+         const btn = e.target.closest('.btn--inline');
+
+         // If there is no button return nothing
+         if (!btn) return;
+
+         const goToPage = +btn.dataset.goto;
+         handler(goToPage);
+      });
+   }
+
    _generateMarkup() {
       const currentPage = this._data.page;
 
@@ -33,7 +45,9 @@ class PaginationView extends View {
 
    _generateMarkupButton(type, currentPage) {
       return `
-      <button class="btn--inline pagination__btn--${type}">
+      <button data-goto="${
+         type === 'next' ? currentPage + 1 : currentPage - 1
+      }" class="btn--inline pagination__btn--${type}">
         ${type === 'next' ? `<span>Page ${currentPage + 1}</span>` : ''}
         <svg class="search__icon">
            <use href="${icons}#icon-arrow-${
