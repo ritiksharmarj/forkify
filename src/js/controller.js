@@ -55,6 +55,7 @@ const controlSearchResults = async () => {
    }
 };
 
+// Pagination function to update the search results with current page
 const controlPagination = (goToPage) => {
    // Render NEW search results
    resultsView.render(model.getSearchResultsPage(goToPage));
@@ -63,9 +64,18 @@ const controlPagination = (goToPage) => {
    paginationView.render(model.state.search);
 };
 
+const controlServings = (newServings) => {
+   // Update the recipe servings (in state)
+   model.updateServings(newServings);
+
+   // Update the recipe view
+   recipeView.render(model.state.recipe);
+};
+
 const init = () => {
    recipeView.addHandlerRender(controlRecipes);
    searchView.addHandlerSearch(controlSearchResults);
    paginationView.addHandlerClick(controlPagination);
+   recipeView.addHandlerUpdateServings(controlServings);
 };
 init();
