@@ -126,3 +126,7 @@ const init = () => {
    if (storage) state.bookmarks = JSON.parse(storage);
 };
 init();
+
+export const uploadRecipe = async (newRecipe) => {
+   const ingredients = Object.entries(newRecipe);
+};
