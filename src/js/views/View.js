@@ -3,7 +3,7 @@ import icons from '../../img/icons.svg';
 export default class View {
    _data;
 
-   render(data) {
+   render(data, render = true) {
       /**
        * 1. If there is no data
        * 2. If there is data but the data is an array and it is empty.
@@ -13,6 +13,8 @@ export default class View {
 
       this._data = data;
       const markup = this._generateMarkup();
+
+      if (!render) return markup;
 
       this._clear();
       this._parentElement.insertAdjacentHTML('afterbegin', markup);
