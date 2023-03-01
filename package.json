@@ -2,19 +2,22 @@
    "name": "forkify",
    "version": "1.0.0",
    "description": "Recipe application",
+   "type": "module",
    "default": "index.html",
    "targets": {
       "main": false
    },
    "scripts": {
       "start": "parcel index.html",
-      "build": "parcel build index.html --dist-dir ./dist"
+      "build": "parcel build index.html"
    },
    "author": "Ritik Sharma",
    "license": "ISC",
    "devDependencies": {
       "@parcel/transformer-sass": "^2.8.3",
+      "cssnano": "^5.1.15",
       "parcel": "^2.8.3",
+      "postcss": "^8.4.21",
       "process": "^0.11.10"
    },
    "dependencies": {
